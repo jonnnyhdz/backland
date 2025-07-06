@@ -27,8 +27,8 @@ router.post('/login', async (req, res) => {
     // Enviar cookie segura
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // Usa true si despliegas en HTTPS
-      sameSite: 'Lax',
+      secure: true, // Usa true si despliegas en HTTPS
+      sameSite: 'None',
       maxAge: 2 * 60 * 60 * 1000 // 2 horas
     });
 
