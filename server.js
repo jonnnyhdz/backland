@@ -10,9 +10,14 @@ app.use(cookieParser()); // 👈 nuevo
 app.use(express.json());
 
 // Habilita CORS con credenciales para aceptar cookies del frontend
+const allowedOrigins = [
+  'http://localhost:3001',
+  'https://boosmedia.netlify.app'
+];
+
 app.use(cors({
-  origin: 'http://localhost:3001', // Cambia si usas otro puerto para el frontend
-  credentials: true                // 👈 necesario para que el navegador permita cookies
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 // Rutas
