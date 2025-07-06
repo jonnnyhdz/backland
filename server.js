@@ -1,20 +1,34 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); // 👈 nuevo
+require('dotenv').config();
 
-app.use(cors());
+const app = express();
+
+// Middleware
+app.use(cookieParser()); // 👈 nuevo
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+// Habilita CORS con credenciales para aceptar cookies del frontend
+app.use(cors({
+  origin: 'http://localhost:3001', // Cambia si usas otro puerto para el frontend
+  credentials: true                // 👈 necesario para que el navegador permita cookies
+}));
 
-const contactoRoutes = require('./src/routes/contact');
-app.use('/api', contactoRoutes);
+// Rutas
+const contactRoutes = require('./src/routes/contact');
+const authRoutes = require('./src/routes/auth');
 
+app.use('/api', contactRoutes);
+app.use('/api/auth', authRoutes);
+
+// Ruta raíz
 app.get('/', (req, res) => {
-  res.send('<h1>API Formulario funcionando</h1>');
+  res.send('<h1>API de Formulario funcionando 🎉</h1>');
 });
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Iniciar servidor
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });
