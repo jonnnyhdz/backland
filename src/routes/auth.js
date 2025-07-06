@@ -56,8 +56,8 @@ router.get('/me', (req, res) => {
 router.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: false,
-    sameSite: 'Lax',
+    secure: true,         // ✅ necesario para producción (HTTPS)
+    sameSite: 'None',     // ✅ permite cookies entre dominios diferentes
   });
   res.json({ message: 'Sesión cerrada correctamente' });
 });
